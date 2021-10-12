@@ -1,3 +1,4 @@
+## Pronto源代码笔记
 * Savitar_thread_notify函数里的method_tag是每种structure单独编码的，比如map的insert_tag和vector的push_back_tag都是1 
 * benchmark入口：./run-perf.sh -> benchmark(可执行文件) —> benchmark/main.cpp -> context.cpp/savitar_main -> thread.cpp/Savitar_thread_create
     * Savitar_thread_create里新建logger thread和main thread
