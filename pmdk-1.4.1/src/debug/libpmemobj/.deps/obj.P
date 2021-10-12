@@ -1,0 +1,124 @@
+../debug/libpmemobj/obj.o: obj.c /usr/include/stdc-predef.h \
+ /usr/include/inttypes.h /usr/include/features.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-64.h \
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/wchar.h \
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/limits.h \
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/bits/posix2_lim.h /usr/include/wchar.h /usr/include/stdio.h \
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stdarg.h \
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stddef.h \
+ /usr/include/xlocale.h \
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stdbool.h \
+ ../common/valgrind_internal.h ../common/valgrind/valgrind.h \
+ ../common/valgrind/helgrind.h ../common/valgrind/valgrind.h \
+ ../common/valgrind/drd.h ../common/valgrind/pmemcheck.h \
+ ../common/valgrind/memcheck.h ../include/libpmem.h \
+ /usr/include/sys/types.h /usr/include/bits/types.h \
+ /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
+ /usr/include/bits/byteswap-16.h /usr/include/sys/select.h \
+ /usr/include/bits/select.h /usr/include/bits/sigset.h \
+ /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+ /usr/include/bits/pthreadtypes.h ravl.h cuckoo.h list.h \
+ ../include/libpmemobj.h ../include/libpmemobj/action.h \
+ ../include/libpmemobj/action_base.h ../include/libpmemobj/base.h \
+ ../include/libpmemobj/atomic.h ../include/libpmemobj/atomic_base.h \
+ ../include/libpmemobj/types.h ../include/libpmemobj/ctl.h \
+ ../include/libpmemobj/iterator.h ../include/libpmemobj/iterator_base.h \
+ ../include/libpmemobj/lists_atomic.h \
+ ../include/libpmemobj/lists_atomic_base.h ../include/libpmemobj/thread.h \
+ ../include/libpmemobj/pool.h ../include/libpmemobj/pool_base.h \
+ ../include/libpmemobj/tx.h /usr/include/errno.h \
+ /usr/include/bits/errno.h /usr/include/linux/errno.h \
+ /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
+ /usr/include/asm-generic/errno-base.h /usr/include/string.h \
+ ../include/libpmemobj/tx_base.h /usr/include/setjmp.h \
+ /usr/include/bits/setjmp.h lane.h redo.h pmemops.h ../common/util.h \
+ /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/ctype.h /usr/include/sys/param.h /usr/include/signal.h \
+ /usr/include/bits/signum.h /usr/include/bits/siginfo.h \
+ /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
+ /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
+ /usr/include/bits/sigthread.h /usr/include/bits/param.h \
+ /usr/include/linux/param.h /usr/include/asm/param.h \
+ /usr/include/asm-generic/param.h pmalloc.h memops.h palloc.h stats.h \
+ ctl.h ../common/queue.h ../common/mmap.h /usr/include/sys/stat.h \
+ /usr/include/bits/stat.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/confname.h /usr/include/getopt.h ../common/out.h \
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib-float.h ../common/util.h ../common/queue.h \
+ ../common/os.h ../common/errno_freebsd.h obj.h ../common/pool_hdr.h \
+ ../common/uuid.h ../common/shutdown_state.h ringbuf.h sync.h \
+ ../common/out.h ../common/os_thread.h ctl_global.h heap_layout.h \
+ ../common/os.h ../common/set.h ../common/vec.h ../common/pool_hdr.h \
+ ../include/librpmem.h tx.h pvector.h ../common/sys_util.h \
+ ../common/os_thread.h
+obj.c /usr/include/stdc-predef.h :
+ /usr/include/inttypes.h /usr/include/features.h /usr/include/sys/cdefs.h :
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h :
+ /usr/include/gnu/stubs-64.h :
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stdint.h :
+ /usr/include/stdint.h /usr/include/bits/wchar.h :
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/limits.h :
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/syslimits.h :
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h :
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h :
+ /usr/include/bits/posix2_lim.h /usr/include/wchar.h /usr/include/stdio.h :
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stdarg.h :
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stddef.h :
+ /usr/include/xlocale.h :
+ /opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include/stdbool.h :
+ ../common/valgrind_internal.h ../common/valgrind/valgrind.h :
+ ../common/valgrind/helgrind.h ../common/valgrind/valgrind.h :
+ ../common/valgrind/drd.h ../common/valgrind/pmemcheck.h :
+ ../common/valgrind/memcheck.h ../include/libpmem.h :
+ /usr/include/sys/types.h /usr/include/bits/types.h :
+ /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h :
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h :
+ /usr/include/bits/byteswap-16.h /usr/include/sys/select.h :
+ /usr/include/bits/select.h /usr/include/bits/sigset.h :
+ /usr/include/bits/time.h /usr/include/sys/sysmacros.h :
+ /usr/include/bits/pthreadtypes.h ravl.h cuckoo.h list.h :
+ ../include/libpmemobj.h ../include/libpmemobj/action.h :
+ ../include/libpmemobj/action_base.h ../include/libpmemobj/base.h :
+ ../include/libpmemobj/atomic.h ../include/libpmemobj/atomic_base.h :
+ ../include/libpmemobj/types.h ../include/libpmemobj/ctl.h :
+ ../include/libpmemobj/iterator.h ../include/libpmemobj/iterator_base.h :
+ ../include/libpmemobj/lists_atomic.h :
+ ../include/libpmemobj/lists_atomic_base.h ../include/libpmemobj/thread.h :
+ ../include/libpmemobj/pool.h ../include/libpmemobj/pool_base.h :
+ ../include/libpmemobj/tx.h /usr/include/errno.h :
+ /usr/include/bits/errno.h /usr/include/linux/errno.h :
+ /usr/include/asm/errno.h /usr/include/asm-generic/errno.h :
+ /usr/include/asm-generic/errno-base.h /usr/include/string.h :
+ ../include/libpmemobj/tx_base.h /usr/include/setjmp.h :
+ /usr/include/bits/setjmp.h lane.h redo.h pmemops.h ../common/util.h :
+ /usr/include/libio.h /usr/include/_G_config.h :
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h :
+ /usr/include/ctype.h /usr/include/sys/param.h /usr/include/signal.h :
+ /usr/include/bits/signum.h /usr/include/bits/siginfo.h :
+ /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h :
+ /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h :
+ /usr/include/bits/sigthread.h /usr/include/bits/param.h :
+ /usr/include/linux/param.h /usr/include/asm/param.h :
+ /usr/include/asm-generic/param.h pmalloc.h memops.h palloc.h stats.h :
+ ctl.h ../common/queue.h ../common/mmap.h /usr/include/sys/stat.h :
+ /usr/include/bits/stat.h /usr/include/unistd.h :
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h :
+ /usr/include/bits/confname.h /usr/include/getopt.h ../common/out.h :
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h :
+ /usr/include/bits/waitstatus.h /usr/include/alloca.h :
+ /usr/include/bits/stdlib-float.h ../common/util.h ../common/queue.h :
+ ../common/os.h ../common/errno_freebsd.h obj.h ../common/pool_hdr.h :
+ ../common/uuid.h ../common/shutdown_state.h ringbuf.h sync.h :
+ ../common/out.h ../common/os_thread.h ctl_global.h heap_layout.h :
+ ../common/os.h ../common/set.h ../common/vec.h ../common/pool_hdr.h :
+ ../include/librpmem.h tx.h pvector.h ../common/sys_util.h :
+ ../common/os_thread.h :
