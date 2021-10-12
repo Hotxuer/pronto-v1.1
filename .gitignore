@@ -1,2 +1,8 @@
 benchmark/traces
 benchmark/workloads
+jemalloc-5.1.0/
+pmdk-1.4.1/
+get-pip.py
+benchmark/log.txt
+benchmark/output.txt
+benchmark/test_*

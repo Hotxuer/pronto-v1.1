@@ -3,6 +3,7 @@
 #include "savitar.hpp"
 #include "ckpt_alloc.hpp"
 #include <emmintrin.h>
+#define MAP_HUGE_SHIFT 26
 #define MAP_HUGE_2MB (21 << MAP_HUGE_SHIFT)
 
 /*

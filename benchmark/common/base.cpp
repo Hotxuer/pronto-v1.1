@@ -124,6 +124,14 @@ uint64_t Benchmark::getThroughput() {
     return execTime > cfg->operations ? (totalOps * 1E9) / execTime : 0;
 }
 
+uint64_t Benchmark::getExtraTime() {
+    PersistentObject* cur_object = (PersistentObject*) objects[0];
+    return cur_object->getExtraTime();
+}
+
 void Benchmark::printReport() {
-    cout << (getLatency() / cfg->operations) << "," << getThroughput() << endl;
+    uint64_t lat = getLatency() / cfg->operations;
+    uint64_t thro = getThroughput();
+    uint64_t ext = getExtraTime() / cfg->operations;
+    cout << lat << "," << thro << "," << ext << endl;
 }

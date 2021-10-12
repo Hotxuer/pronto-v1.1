@@ -1,21 +1,22 @@
 #!/bin/bash
-apt-get -y install git-core
+yum -y install git-core
 
-apt-get -y install numactl
-apt-get -y install build-essential
-apt-get -y install uuid-dev
-apt-get -y install pkg-config
-apt-get -y install libndctl-dev
-apt-get -y install libdaxctl-dev
-apt-get -y install autoconf
-apt-get -y install cmake
-apt-get -y install python
-apt-get -y install curl
-apt-get -y install libz-dev
-apt-get -y install doxygen
-apt-get -y install graphviz
+yum -y install numactl
+yum -y install build-essential
+yum -y install uuid-dev
+yum -y install pkg-config
+yum -y install libndctl-dev
+yum -y install libdaxctl-dev
+yum -y install autoconf
+yum -y install cmake
+yum -y install python
+yum -y install curl
+yum -y install libz-dev
+yum -y install doxygen
+yum -y install graphviz
 
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
 python get-pip.py
 python -m pip install numpy
 

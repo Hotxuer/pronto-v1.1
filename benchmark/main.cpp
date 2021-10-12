@@ -95,6 +95,11 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    // print args
+    for (int i=0; i<argc; i++) {
+        cout<<"arg"<<i<<": "<<argv[i]<<endl; 
+    }
+
     if (strcmp(argv[1], "volatile-vector") == 0)
         return runBenchmark<Vector>(argc, argv);
     else if (strcmp(argv[1], "volatile-queue") == 0)

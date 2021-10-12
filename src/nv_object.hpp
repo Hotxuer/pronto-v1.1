@@ -67,6 +67,9 @@ class PersistentObject {
 
         void constructor(uuid_t id);
 
+        // 对log thread造成的额外等待时间进行计时
+        uint64_t extra_time = 0;
+
     public:
         /*
          * Part of the recovery process for nested transaction
@@ -79,6 +82,14 @@ class PersistentObject {
             if (object->last_played_commit_id + 1 != wait_parent_commit_id)
                 return false;
             return true;
+        }
+
+        void addExtraTime(uint64_t et) {
+            __sync_fetch_and_add(&extra_time, et);
+        }
+
+        uint64_t getExtraTime() {
+            return extra_time;
         }
 
     protected:

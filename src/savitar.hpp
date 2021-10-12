@@ -9,10 +9,15 @@
 #include "nv_factory.hpp"
 #include "stl_alloc.hpp"
 
+// // debug模式
+// #ifndef DEBUG  
+// #define DEBUG  
+// #endif
+
 #define MAX_THREADS                 64
 #define CACHE_LINE_WIDTH            64
 #define BUFFER_SIZE                 8
-#define MAX_CORES                   40
+#define MAX_CORES                   80
 #define MAX_ACTIVE_TXS              15
 #define CATALOG_FILE_NAME           "savitar.cat"
 #define CATALOG_FILE_SIZE           ((size_t)8 << 20) // 8 MB

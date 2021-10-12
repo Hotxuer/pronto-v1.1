@@ -79,7 +79,7 @@ uint64_t Savitar_log_append(struct RedoLog *log, ArgVector *v, size_t v_size) {
     for (size_t i = 0; i < v_size; i++) {
         entry_size += v[i].len;
     }
-    if (entry_size % CACHE_LINE_WIDTH != 0) {
+    if (entry_size % CACHE_LINE_WIDTH != 0) { // 写入log entry的长度要与cache_line对齐
         entry_size += CACHE_LINE_WIDTH - (entry_size % CACHE_LINE_WIDTH);
     }
 
@@ -94,8 +94,16 @@ uint64_t Savitar_log_append(struct RedoLog *log, ArgVector *v, size_t v_size) {
         dst += v[i].len;
     }
 
-    pmem_drain();
+    pmem_drain(); // 测试 no drain 性能
     pmem_persist(&log->tail, sizeof(log->tail));
+
+    // // 去掉flush持久化操作测试性能
+    // memcpy(dst, &LogMagic, sizeof(LogMagic));
+    // dst += sizeof(uint64_t);
+    // for (size_t i = 0; i < v_size; i++) {
+    //     memcpy(dst, v[i].addr, v[i].len);
+    //     dst += v[i].len;
+    // }
 
     return offset;
 }

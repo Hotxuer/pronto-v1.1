@@ -226,6 +226,7 @@ int Savitar_thread_create(pthread_t *thread, const pthread_attr_t *attr,
 
 #ifdef DEBUG
 static __thread uint64_t cycles[4];
+#endif
 
 static inline uint64_t rdtscp() {
   uint32_t aux;
@@ -233,7 +234,7 @@ static inline uint64_t rdtscp() {
   asm volatile ( "rdtscp\n" : "=a" (rax), "=d" (rdx), "=c" (aux) : : );
   return (rdx << 32) + rax;
 }
-#endif
+
 
 // inline logging method for synchronous semantic logging
 inline void Savitar_persister_log(uint64_t active_tx_id) {
@@ -316,7 +317,7 @@ void Savitar_thread_notify(int num, ...) {
 
     sync_buffer[tx_buffer[0] - 1].method_tag = method_tag;
 #ifdef SYNC_SL
-    Savitar_persister_log(tx_buffer[0] - 1);
+    Savitar_persister_log(tx_buffer[0] - 1); // 就直接本线程 inline做lpg persist
     PRINT("[%d] Finished creating synchronous semantic log\n", (int)pthread_self());
 #endif // SYNC_SL
 
@@ -334,6 +335,12 @@ void Savitar_thread_wait(PersistentObject *object, SavitarLog *log) {
     PRINT("[%d] Waiting for persister to commit!\n", (int)pthread_self());
     cycles[2] = rdtscp();
 #endif
+    // 开始等待
+    struct timespec tb, te;
+    clock_gettime(CLOCK_REALTIME, &tb);
+    // uint64_t t_begin = 0, t_end = 0;
+    // t_begin = rdtscp();
+
     if (object->isRecovering()) {
         /*
          * TODO optimize nested transactions recovery by using a condition
@@ -349,6 +356,15 @@ void Savitar_thread_wait(PersistentObject *object, SavitarLog *log) {
 #endif // SYNC_SL
     assert(tx_buffer[0] > 0);
     Savitar_log_commit(log, tx_buffer[tx_buffer[0]--]);
+
+    // 结束等待
+    clock_gettime(CLOCK_REALTIME, &te);
+    uint64_t interval = (te.tv_sec - tb.tv_sec) * 1E9;
+    interval += (te.tv_nsec - tb.tv_nsec);
+    object->addExtraTime(interval);
+    // t_end = rdtscp();
+    // object->addExtraTime(t_end - t_begin);
+
 #ifdef DEBUG
     cycles[3] = rdtscp();
     fprintf(stdout, "%zu,%zu,%zu,%zu\n",

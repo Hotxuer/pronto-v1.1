@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm log.txt output.txt
+touch log.txt output.txt 
+
 ERR_LIMIT="0.05"
 MNT_POINT=/mnt/ram
 NR_HUGE_PAGES=$((8192 * 2 * 2)) # 64 GB
@@ -21,7 +24,8 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-for MODE in "rocksdb" "pmemkv" "persistent" "persistent-sync" "volatile"; do
+for MODE in "persistent" "volatile"; do
+# for MODE in "rocksdb" "pmemkv" "persistent" "persistent-sync" "volatile"; do
     if [ -z ${USE_SMALL_DATASET+x} ]; then
         TRACE_ROOT="./traces/normal"
     else
@@ -36,7 +40,8 @@ for MODE in "rocksdb" "pmemkv" "persistent" "persistent-sync" "volatile"; do
     fi
 
     MAX_THREADS=1
-    BENCHMARKS="ordered-map queue vector map hash-map"
+    # BENCHMARKS="ordered-map queue vector map hash-map"
+    BENCHMARKS="ordered-map queue vector map"
     if [ "$MODE" == "rocksdb" ]; then
         BENCHMARKS="a-sync b-sync a-async b-async a-pronto b-pronto a-pronto-sync b-pronto-sync"
         MAX_THREADS=$CORES_PER_SOCKET
@@ -150,6 +155,8 @@ for MODE in "rocksdb" "pmemkv" "persistent" "persistent-sync" "volatile"; do
 
                 LATENCIES=(0 0 0 0 0)
                 THROUGHPUTS=(100 200 300 400 500)
+                EXTRATIME=(0 0 0 0 0)
+                EXTRATIMERATIO=(0 0 0 0 0)
 
                 ITERATION=0
                 while [[ $ITERATION -lt $MAX_ITERATIONS ]]; do
@@ -164,11 +171,16 @@ for MODE in "rocksdb" "pmemkv" "persistent" "persistent-sync" "volatile"; do
                     else
                         OUTPUT=`export LD_PRELOAD=$PRELOAD && numactl --membind=0 --cpunodebind=0 ./benchmark $OPTION $TRACE $THREADS $VALUE_SIZE`
                     fi
+
+                    echo $OUTPUT >> output.txt
+                    
                     if [[ $? -ne 0 ]]; then
                         >&2 echo $OUTPUT
                     else
                         LAT=`echo $OUTPUT | awk -F ',' '{ print $2 }'`
                         BW=`echo $OUTPUT | awk -F ',' '{ print $3 }'`
+                        EX=`echo $OUTPUT | awk -F ',' '{ print $4 }'`
+                        EXR=`echo $OUTPUT | awk -F ',' '{ print $5 }'`
 
                         LATENCIES[4]=${LATENCIES[3]}
                         LATENCIES[3]=${LATENCIES[2]}
@@ -180,6 +192,16 @@ for MODE in "rocksdb" "pmemkv" "persistent" "persistent-sync" "volatile"; do
                         THROUGHPUTS[2]=${THROUGHPUTS[1]}
                         THROUGHPUTS[1]=${THROUGHPUTS[0]}
                         THROUGHPUTS[0]=$BW
+                        EXTRATIME[4]=${EXTRATIME[3]}
+                        EXTRATIME[3]=${EXTRATIME[2]}
+                        EXTRATIME[2]=${EXTRATIME[1]}
+                        EXTRATIME[1]=${EXTRATIME[0]}
+                        EXTRATIME[0]=$EX
+                        EXTRATIMERATIO[4]=${EXTRATIMERATIO[3]}
+                        EXTRATIMERATIO[3]=${EXTRATIMERATIO[2]}
+                        EXTRATIMERATIO[2]=${EXTRATIMERATIO[1]}
+                        EXTRATIMERATIO[1]=${EXTRATIMERATIO[0]}
+                        EXTRATIMERATIO[0]=$EXR
 
                         DATA="[ ${THROUGHPUTS[0]}, ${THROUGHPUTS[1]}, ${THROUGHPUTS[2]}, ${THROUGHPUTS[3]}, ${THROUGHPUTS[4]} ]"
                         STD=`echo -e "import numpy as np\nprint(np.std(${DATA}))\n" | python`
@@ -194,11 +216,32 @@ for MODE in "rocksdb" "pmemkv" "persistent" "persistent-sync" "volatile"; do
                     sleep 1s
                 done
 
+                # for I in `seq 0 4`; do
+                #     LAT=${LATENCIES[I]}
+                #     BW=${THROUGHPUTS[I]}
+                #     EX=${EXTRATIME[I]}
+                #     EXR=${EXTRATIMERATIO[I]}
+                #     echo "$MODE,$BENCH,$THREADS,$VALUE_SIZE,$I,$LAT,$BW,$EX,$EXR"
+                #     echo "$MODE,$BENCH,$THREADS,$VALUE_SIZE,$I,$LAT,$BW,$EX,$EXR" >> log.txt
+                # done
+
+                # log只输出平均值
+                LAT=0
+                BW=0
+                EX=0
                 for I in `seq 0 4`; do
-                    LAT=${LATENCIES[I]}
-                    BW=${THROUGHPUTS[I]}
-                    echo "$MODE,$BENCH,$THREADS,$VALUE_SIZE,$I,$LAT,$BW"
+                    let LAT=LAT+${LATENCIES[I]}
+                    let BW=BW+${THROUGHPUTS[I]}
+                    let EX=EX+${EXTRATIME[I]}
                 done
+
+                LAT=`echo "scale=0; $LAT/5" | bc`
+                BW=`echo "scale=0; $BW/5" | bc`
+                EX=`echo "scale=0; $EX/5" | bc`
+                EXR=`echo "scale=3; $EX/$LAT" | bc | awk '{printf "%.3f", $0}'`
+
+                echo "$MODE,$BENCH,$THREADS,$VALUE_SIZE,$LAT,$BW,$EX,$EXR"
+                echo "$MODE,$BENCH,$THREADS,$VALUE_SIZE,$LAT,$BW,$EX,$EXR" >> log.txt 
 
                 if [ ! -z ${FIXED_VALUE_SIZE+x} ]; then
                     break

@@ -34,6 +34,7 @@ public:
     static void *worker(void *);
     uint64_t getLatency();
     uint64_t getThroughput();
+    uint64_t getExtraTime();
     virtual void printReport();
 
 protected:
