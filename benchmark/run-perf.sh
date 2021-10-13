@@ -1,8 +1,5 @@
 #!/bin/bash
 
-rm log.txt output.txt
-touch log.txt output.txt 
-
 ERR_LIMIT="0.05"
 MNT_POINT=/mnt/ram
 NR_HUGE_PAGES=$((8192 * 2 * 2)) # 64 GB

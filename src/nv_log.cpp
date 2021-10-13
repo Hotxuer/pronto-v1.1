@@ -7,6 +7,8 @@
 
 #define CHECKSUM(log) ((&log->checksum)[1] ^ (&log->checksum)[2] ^ (&log->checksum)[3])
 
+#define asm_fence() { __asm__ __volatile__("mfence"); }
+
 static const uint64_t LogMagic = REDO_LOG_MAGIC;
 
 void Savitar_log_path(uuid_t uuid, char *path) {
@@ -87,23 +89,26 @@ uint64_t Savitar_log_append(struct RedoLog *log, ArgVector *v, size_t v_size) {
     assert(offset + entry_size <= log->size);
     char *dst = (char *)log + offset + sizeof(uint64_t); // Hole for commit_id
 
-    pmem_memcpy_nodrain(dst, &LogMagic, sizeof(LogMagic));
-    dst += sizeof(uint64_t);
-    for (size_t i = 0; i < v_size; i++) {
-        pmem_memcpy_nodrain(dst, v[i].addr, v[i].len);
-        dst += v[i].len;
-    }
-
-    pmem_drain(); // 测试 no drain 性能
-    pmem_persist(&log->tail, sizeof(log->tail));
-
-    // // 去掉flush持久化操作测试性能
-    // memcpy(dst, &LogMagic, sizeof(LogMagic));
+    // pmem_memcpy_nodrain(dst, &LogMagic, sizeof(LogMagic)); // 写log元数据
     // dst += sizeof(uint64_t);
-    // for (size_t i = 0; i < v_size; i++) {
-    //     memcpy(dst, v[i].addr, v[i].len);
+    // for (size_t i = 0; i < v_size; i++) { // 写operation内容
+    //     pmem_memcpy_nodrain(dst, v[i].addr, v[i].len);
     //     dst += v[i].len;
     // }
+
+    // pmem_drain(); //drain，等待nvm buffer正式写入
+    // pmem_persist(&log->tail, sizeof(log->tail));
+
+    // 去掉flush持久化操作测试性能
+    memcpy(dst, &LogMagic, sizeof(LogMagic));
+    dst += sizeof(uint64_t);
+    for (size_t i = 0; i < v_size; i++) {
+        memcpy(dst, v[i].addr, v[i].len);
+        dst += v[i].len;
+    }
+    asm_fence();
+
+
 
     return offset;
 }
