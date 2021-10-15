@@ -1,6 +1,3 @@
-rm log.txt output.txt log.csv
-touch log.txt output.txt 
-
 echo ----------"begin to init ext4----------"
 cd ..
 ./init_ext4.sh

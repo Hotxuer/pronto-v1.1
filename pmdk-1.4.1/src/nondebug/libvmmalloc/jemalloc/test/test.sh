@@ -24,7 +24,7 @@ for t in $@; do
     echo
   fi
   echo "=== ${t} ==="
-  ${t} /home/liangxu/nfs/pronto/pronto-v1.1/pmdk-1.4.1/src/jemalloc/ /home/liangxu/nfs/pronto/pronto-v1.1/pmdk-1.4.1/src/nondebug/libvmmalloc/jemalloc/
+  ${t} /home/liangxu/nfs/pronto-v1.1/pmdk-1.4.1/src/jemalloc/ /home/liangxu/nfs/pronto-v1.1/pmdk-1.4.1/src/nondebug/libvmmalloc/jemalloc/
   result_code=$?
   case ${result_code} in
     ${pass_code})

@@ -17,15 +17,15 @@ INCLUDEDIR := $(DESTDIR)/usr/local/include
 LIBDIR := $(DESTDIR)/usr/local/lib
 DATADIR := $(DESTDIR)/usr/local/share
 MANDIR := $(DESTDIR)/usr/local/share/man
-srcroot := /home/liangxu/nfs/pronto/pronto-v1.1/pmdk-1.4.1/src/jemalloc/
+srcroot := /home/liangxu/nfs/pronto-v1.1/pmdk-1.4.1/src/jemalloc/
 objroot := 
-abs_srcroot := /home/liangxu/nfs/pronto/pronto-v1.1/pmdk-1.4.1/src/jemalloc/
-abs_objroot := /home/liangxu/nfs/pronto/pronto-v1.1/pmdk-1.4.1/src/debug/libvmem/jemalloc/
+abs_srcroot := /home/liangxu/nfs/pronto-v1.1/pmdk-1.4.1/src/jemalloc/
+abs_objroot := /home/liangxu/nfs/pronto-v1.1/pmdk-1.4.1/src/debug/libvmem/jemalloc/
 
 # Build parameters.
 CPPFLAGS :=  -D_GNU_SOURCE -D_REENTRANT -I$(srcroot)include -I$(objroot)include
-CFLAGS := -std=gnu99 -Wall -Werror -std=gnu99 -pthread -DSRCVERSION="6c9077c" -I/home/liangxu/nfs/pronto/pronto-v1.1/pmdk-1.4.1/src/common -Wp,-U_FORTIFY_SOURCE -O0 -ggdb -DDEBUG -I/home/liangxu/nfs/pronto/pronto-v1.1/pmdk-1.4.1/src/common -fvisibility=hidden
-LDFLAGS := -Wl,-z,relro -Wl,--fatal-warnings -Wl,-rpath=/usr/local/lib64/pmdk_debug
+CFLAGS := -std=gnu99 -Wall -Werror -std=gnu99 -pthread -DSRCVERSION="172ac69" -I/home/liangxu/nfs/pronto-v1.1/pmdk-1.4.1/src/common -Wp,-U_FORTIFY_SOURCE -O0 -ggdb -DDEBUG -I/home/liangxu/nfs/pronto-v1.1/pmdk-1.4.1/src/common -fvisibility=hidden
+LDFLAGS := -Wl,-z,relro -Wl,--fatal-warnings -Wl,-rpath=/usr/local/lib/pmdk_debug
 EXTRA_LDFLAGS := 
 LIBS :=  -lpthread
 RPATH_EXTRA := 
