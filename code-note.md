@@ -54,3 +54,22 @@
     * 最后输出报告是benchmark的printReport()
     * 是用clock_gettime()对t1、t2设置当前时间
     * 在Savitar_thread_wait中直接就可以完成目标计时NDD,但是是分operarion的，需要加合起来
+
+
+## 70服务器跑通Pronto遇到的坑
+* dependency.sh更改 
+    * apt-get -> yum 有很多包找不到，用#标记
+    * wget手动安装
+    * Get-pip.py更改下载地址（python2版本）
+* init_ext4.sh /dev/pmem12更改
+* src/savitar.hpp MAX_CORE 80更改
+* 源码debug：
+    * ckpt_alloc.cpp:361 #if DEBUG -> #ifdef DEBUG
+* error: ‘MAP_HUGE_SHIFT’ was not declared in this scope: #define MAP_HUGE_SHIFT 26
+* 编译jemalloc时
+    * touch doc/jemalloc.html
+    * touch doc/jemalloc.3
+* Pmdk-1.4在70服务器上编译不过 改成了1.10版本
+* apt install libpmemobj-cpp-dev
+* 把70上的C++版本从9切换为7 https://blog.csdn.net/weixin_40628128/article/details/89839268
+    * 要不然benchmark编译出错，与STL map等有关
